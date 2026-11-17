@@ -14,6 +14,8 @@ DashboardObserver dashboard = new DashboardObserver();
 monitor.Attach(dashboard);
 monitor.Attach(dashboard); // Đăng ký trùng phải bị bỏ qua
 
+monitor.Attach(new EmailAlertObserver());
+monitor.Attach(new AuditLogObserver());
 monitor.CheckSensor("Room A", sensor); // 40%: không cảnh báo
 
 legacy.SetSmokeLevel(500);
@@ -24,3 +26,4 @@ monitor.CheckSensor("Room A", sensor); // 73.5%: CRITICAL
 
 monitor.Detach(dashboard);
 monitor.CheckSensor("Room A", sensor); // Đã gỡ: không còn nhận
+
