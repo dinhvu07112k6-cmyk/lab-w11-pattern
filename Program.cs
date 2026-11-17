@@ -1,11 +1,26 @@
-﻿using lab_11.Interfaces;            
-using lab_11.Sensors;   
+﻿/****************/
+//Mã sinh viên  : 202419021 
+//Họ tên  : Phạm Đình Vũ
+/****************/
+using lab_11.Observers;
+using lab_11.Sensors;
 
-LegacySmokeDetector legacy = new LegacySmokeDetector(735);
-ISensor sensor = new SmokeSensorAdapter(legacy);
+LegacySmokeDetector legacy = new LegacySmokeDetector(400);
+SmokeSensorAdapter sensor = new SmokeSensorAdapter(legacy);
 
-Console.WriteLine(sensor.ReadValue()); // 73.5
-Console.WriteLine(sensor.GetUnit());   // % smoke
+SensorMonitor monitor = new SensorMonitor();
+DashboardObserver dashboard = new DashboardObserver();
+
+monitor.Attach(dashboard);
+monitor.Attach(dashboard); // Đăng ký trùng phải bị bỏ qua
+
+monitor.CheckSensor("Room A", sensor); // 40%: không cảnh báo
 
 legacy.SetSmokeLevel(500);
-Console.WriteLine(sensor.ReadValue()); // 50
+monitor.CheckSensor("Room A", sensor); // 50%: WARNING
+
+legacy.SetSmokeLevel(735);
+monitor.CheckSensor("Room A", sensor); // 73.5%: CRITICAL
+
+monitor.Detach(dashboard);
+monitor.CheckSensor("Room A", sensor); // Đã gỡ: không còn nhận

@@ -1,4 +1,8 @@
-﻿namespace lab_11.Sensors
+﻿/****************/
+//Mã sinh viên  : 202419021 
+//Họ tên  : Phạm Đình Vũ
+/****************/
+namespace lab_11.Sensors
 {
     public sealed class LegacySmokeDetector
     {
