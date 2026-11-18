@@ -2,6 +2,9 @@
 //Mã sinh viên  : 202419021 
 //Họ tên  : Phạm Đình Vũ
 /****************/
+using lab_11.Devices;
+using lab_11.Interfaces;
+using lab_11.Mediators;
 using lab_11.Observers;
 using lab_11.Sensors;
 
@@ -13,6 +16,13 @@ DashboardObserver dashboard = new DashboardObserver();
 
 monitor.Attach(dashboard);
 monitor.Attach(dashboard); // Đăng ký trùng phải bị bỏ qua
+
+IEmergencyMediator mediator = new EmergencyMediator(
+    new Alarm(),
+    new DoorController(),
+    new VentilationController());
+
+monitor.Attach(new EmergencyBridgeObserver(mediator)); 
 
 monitor.Attach(new EmailAlertObserver());
 monitor.Attach(new AuditLogObserver());
