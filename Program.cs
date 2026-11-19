@@ -46,3 +46,18 @@ errorMonitor.Attach(new DashboardObserver());
 
 legacy.SetSmokeLevel(700);
 errorMonitor.CheckSensor("Error test", sensor);
+
+Console.WriteLine("\n--- TEST TU HUY DANG KY ---");
+
+SensorMonitor detachMonitor = new SensorMonitor();
+
+detachMonitor.Attach(new SelfDetachingObserver(detachMonitor));
+detachMonitor.Attach(new DashboardObserver());
+
+legacy.SetSmokeLevel(700);
+
+Console.WriteLine("Lan 1:");
+detachMonitor.CheckSensor("Detach test", sensor);
+
+Console.WriteLine("Lan 2:");
+detachMonitor.CheckSensor("Detach test", sensor);
