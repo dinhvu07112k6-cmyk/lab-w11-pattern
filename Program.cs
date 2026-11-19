@@ -37,3 +37,12 @@ monitor.CheckSensor("Room A", sensor); // 73.5%: CRITICAL
 monitor.Detach(dashboard);
 monitor.CheckSensor("Room A", sensor); // Đã gỡ: không còn nhận
 
+Console.WriteLine("\n--- TEST OBSERVER LOI ---");
+
+SensorMonitor errorMonitor = new SensorMonitor();
+
+errorMonitor.Attach(new FaultyObserver());
+errorMonitor.Attach(new DashboardObserver());
+
+legacy.SetSmokeLevel(700);
+errorMonitor.CheckSensor("Error test", sensor);
